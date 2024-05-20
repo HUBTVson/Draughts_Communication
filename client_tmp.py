@@ -3,24 +3,29 @@ import threading
 import json
 import signal
 
+
 class CheckersClient:
     def __init__(self, host='localhost', port=5555):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((host, port))
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.connect((host, port))
         signal.signal(signal.SIGINT, self.shutdown)
         threading.Thread(target=self.listen_for_updates).start()
+        self.game_state = None
+        self.player_id = None
 
     def listen_for_updates(self):
+        # Receive player id
+        self.player_id = self.server.recv(1024).decode()
+        print(f"You are {self.player_id}")
+
         while True:
-            message = self.client.recv(1024).decode()
+            message = self.server.recv(1024).decode()
             if message:
                 data = json.loads(message)
-                if 'status' in data and data['status'] == 'Your turn':
-                    print("It's your turn!")
+                self.game_state = data
+                self.render_board()
+                if self.game_state["turn"] == self.player_id:
                     self.get_user_input()
-                else:
-                    self.game_state = data
-            self.render_board()
 
     def send_move(self, start, end, captures=[]):
         move = {
@@ -28,7 +33,7 @@ class CheckersClient:
             "end": end,
             "captures": captures
         }
-        self.client.send(json.dumps(move).encode())
+        self.server.send(json.dumps(move).encode())
 
     def render_board(self):
         board = self.game_state["board"]
@@ -44,9 +49,10 @@ class CheckersClient:
         self.send_move(start, end)
 
     def shutdown(self, signum, frame):
-        print("\nShutting down client...")
-        self.client.close()
+        print("\nShutting down server...")
+        self.server.close()
         exit()
 
+
 if __name__ == "__main__":
-    client = CheckersClient()
+    server = CheckersClient()

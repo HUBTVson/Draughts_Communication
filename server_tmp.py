@@ -2,6 +2,8 @@ import socket
 import threading
 import json
 import signal
+import numpy as np
+
 
 class CheckersServer:
     def __init__(self, host='localhost', port=5555):
@@ -45,7 +47,6 @@ class CheckersServer:
         if self.validate_move(move):
             self.update_game_state(move)
             self.broadcast_game_state()
-            self.notify_next_player()
         else:
             client_socket.send(json.dumps({"status": "Invalid move"}).encode())
 
@@ -64,24 +65,25 @@ class CheckersServer:
 
     def broadcast_game_state(self):
         game_state = json.dumps(self.game_state)
-        for client in self.clients:
+        for client, _ in self.clients:
             client.send(game_state.encode())
 
-    def notify_next_player(self):
-        current_turn = self.game_state["turn"]
-        for client, player_id in self.clients:
-            if player_id == current_turn:
-                client.send(json.dumps({"status": "Your turn"}).encode())
-
     def start(self):
+        player_ids = ['player1', 'player2']
+        np.random.shuffle(player_ids)
+
         while len(self.clients) < 2:
             client_socket, addr = self.server.accept()
-            player_id = 'player1' if len(self.clients) == 0 else 'player2'
+            player_id = player_ids.pop()
             self.clients.append((client_socket, player_id))
             print(f"{player_id} connected from {addr}")
-            threading.Thread(target=self.handle_client, args=(client_socket, player_id)).start()
-        
-        self.notify_next_player()
+            threading.Thread(target=self.handle_client, args=(
+                client_socket, player_id)).start()
+
+            # Send player id to client
+            client_socket.send(player_id.encode())
+
+        self.broadcast_game_state()
 
     def shutdown(self, signum, frame):
         print("\nShutting down server...")
@@ -89,6 +91,7 @@ class CheckersServer:
             client.close()
         self.server.close()
         exit()
+
 
 if __name__ == "__main__":
     server = CheckersServer()
