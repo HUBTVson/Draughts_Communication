@@ -2,61 +2,77 @@ import socket
 import threading
 import json
 import signal
-from game import Game
+import numpy as np
+from checkers import Checkers
+from typing import Tuple, List
 
 class CheckersServer:
-    def __init__(self, host='localhost', port=5555):
+    def __init__(self, host='localhost', port=5555) -> None:
+        self.start_server(host, port)
+        self.initialize_game()
+
+    def start_server(self, host: str, port: int) -> None:
+        self.clients: List[Tuple[socket.socket, int]] = []
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind((host, port))
         self.server.listen(2)
         print(f"Server started on {host}:{port}")
-        self.clients = []
-        self.game = Game()
-        signal.signal(signal.SIGINT, self.shutdown)
-        self.lock = threading.Lock()
 
-    def handle_client(self, client_socket, player_id):
+        self.lock = threading.Lock()
+        signal.signal(signal.SIGINT, self.shutdown)
+
+    def initialize_game(self) -> None:
+        self.game = Checkers()
+
+    def handle_client(self, client_socket: socket.socket, player_id: int) -> None:
         while True:
             try:
                 message = client_socket.recv(1024).decode()
                 if message:
                     with self.lock:
-                        if self.game.elements['board'].current_turn == player_id:
-                            self.process_move(client_socket, message, player_id)
+                        if self.game.turn == player_id:
+                            self.process_move(client_socket, message)
             except:
-                self.clients.remove((client_socket, player_id))
+                self.clients.remove(client_socket)
                 client_socket.close()
                 break
 
-    def process_move(self, client_socket, message, player_id):
+    def process_move(self, client_socket: socket.socket, message: str) -> None:
         move = json.loads(message)
-        success, status_message = self.game.process_move(move, player_id)
-        if success:
+        if self.game.validate_move(move):
+            self.game.move(move)
             self.broadcast_game_state()
-            self.notify_next_player()
         else:
-            client_socket.send(json.dumps({"status": status_message}).encode())
+            client_socket.send(json.dumps({"status": "Invalid move"}).encode())
 
-    def broadcast_game_state(self):
-        game_state = json.dumps(self.game.get_game_state())
+    def broadcast_game_state(self) -> None:
+        game_state = json.dumps(self.game.state)
         for client, _ in self.clients:
             client.send(game_state.encode())
 
-    def notify_next_player(self):
-        current_turn = self.game.elements['board'].current_turn
-        for client, player_id in self.clients:
-            if player_id == current_turn:
-                client.send(json.dumps({"status": "Your turn"}).encode())
+    def start(self) -> None:
+        player_ids = [1, 2]
 
-    def start(self):
         while len(self.clients) < 2:
+            # Accept connection from client
             client_socket, addr = self.server.accept()
-            player_id = 'player1' if len(self.clients) == 0 else 'player2'
+
+            # Assign player id to client
+            player_id = np.random.choice(player_ids)
+            player_ids.remove(player_id)
+
+            # Add client to list of clients
             self.clients.append((client_socket, player_id))
             print(f"{player_id} connected from {addr}")
-            threading.Thread(target=self.handle_client, args=(client_socket, player_id)).start()
-        
-        self.notify_next_player()
+
+            # Start a new thread to handle client
+            threading.Thread(target=self.handle_client, args=(
+                client_socket, player_id)).start()
+
+            # Send player id to client
+            client_socket.send(str(player_id).encode())
+
+        self.broadcast_game_state()
 
     def shutdown(self, signum, frame):
         print("\nShutting down server...")
@@ -64,6 +80,7 @@ class CheckersServer:
             client.close()
         self.server.close()
         exit()
+
 
 if __name__ == "__main__":
     server = CheckersServer()

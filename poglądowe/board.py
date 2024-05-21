@@ -1,8 +1,8 @@
 import colorama
 from colorama import Fore, Back, Style
-from player import Player
-from piece import Piece
-from square import Square
+from poglądowe.player import Player
+from poglądowe.piece import Piece
+from poglądowe.square import Square
 import os
 #Class of board
 class Board:

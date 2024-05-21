@@ -16,7 +16,7 @@ class CheckersClient:
     def listen_for_updates(self):
         # Receive player id
         self.player_id = self.server.recv(1024).decode()
-        print(f"You are {self.player_id}")
+        print(f"You are player{self.player_id}")
 
         while True:
             message = self.server.recv(1024).decode()
@@ -44,8 +44,8 @@ class CheckersClient:
     def get_user_input(self):
         start = input("Enter start position (row,col): ").split(',')
         end = input("Enter end position (row,col): ").split(',')
-        start = [int(start[0]), int(start[1])]
-        end = [int(end[0]), int(end[1])]
+        start = (int(start[0]), int(start[1]))
+        end = (int(end[0]), int(end[1]))
         self.send_move(start, end)
 
     def shutdown(self, signum, frame):
