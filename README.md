@@ -1,5 +1,5 @@
 # Project name: "Draughts"
-# Authors: Jnaicki Jakub, Kondracki Jakub, Twardowski Hubert
+# Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
 # 1. Project Idea
 The project is aimed to present the basic communication between the server and client in the droughts game board.
