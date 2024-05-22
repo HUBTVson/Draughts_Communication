@@ -19,7 +19,7 @@ Multiple captures can be made in a single turn if the opportunity arises, creati
 # 3. Technology selection
 Programming language: Python
 Application: Console
-Libraries: os, colorama, socket
+Libraries: signal, socket
 
 
 # 4. Division of responsibilities
