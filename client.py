@@ -33,7 +33,7 @@ class CheckersClient:
                     self.get_user_input()
 
                 elif data["status"] == "update":
-                    self.game_state = data["game_state"]
+                    self.game_state = json.loads(data["game_state"])
                     self.render_board()
                     if self.game_state["turn"] == self.player_id:
                         self.get_user_input()

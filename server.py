@@ -65,8 +65,9 @@ class CheckersServer:
                         if self.game.turn == player_id:
                             self.process_move(client_socket, message)
             except:
-                self.clients.remove(client_socket)
-                client_socket.close()
+                if client_socket in self.clients:
+                    self.clients.remove(client_socket)
+                    client_socket.close()
                 self.broadcast_message(json.dumps({
                     "status": "EXIT",
                     "message": f"Player {player_id} has left the game"
