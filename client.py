@@ -61,8 +61,15 @@ class CheckersClient:
         print()
 
     def get_user_input(self):
-        start = input("Enter start position (row,col): ").split(',')
-        end = input("Enter end position (row,col): ").split(',')
+        try:
+            print(f"Player{self.player_id}'s turn")
+            start = input("Enter start position (row,col): ").split(',')
+            end = input("Enter end position (row,col): ").split(',')
+        except KeyboardInterrupt:
+            self.server.send(json.dumps({
+                "status": "EXIT"
+            }).encode())
+            self.shutdown(None, None)
 
         start = (int(start[0]), int(start[1]))
         end = (int(end[0]), int(end[1]))
