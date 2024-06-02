@@ -14,6 +14,7 @@ class CheckersServer:
         self.initialize_game()
 
     def start_server(self, host: str, port: int) -> None:
+        # Start server on specified host and port
         self.clients: List[Tuple[socket.socket, int]] = []
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind((host, port))
@@ -23,9 +24,11 @@ class CheckersServer:
         self.lock = threading.Lock()
 
     def initialize_game(self) -> None:
+        # Initialize game state
         self.game = Checkers()
 
     def broadcast_message(self, message: str) -> None:
+        # Broadcast message to all clients
         for client, _ in self.clients:
             client.send(message.encode())
 
@@ -40,6 +43,8 @@ class CheckersServer:
         # Close all client connections
         for client, _ in self.clients:
             client.close()
+
+        # Clear list of clients and close server
         self.clients = []
         self.server.close()
 
@@ -51,11 +56,16 @@ class CheckersServer:
     def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = False) -> None:
         while True:
             try:
+                # Receive message from client
                 message = client_socket.recv(1024).decode()
+                # Deserialize message
                 message = json.loads(message)
+
+                # Check for message type
                 if message["status"] == "EXIT":
                     raise Exception("Client exited")
 
+                # Process move
                 if message["status"] == "move":
                     with self.lock:
                         if self.game.turn == player_id:
@@ -63,12 +73,15 @@ class CheckersServer:
             except Exception as e:
                 if debug:
                     print(e)
+
+                # Remove client from list of clients
                 try:
                     self.clients.remove((client_socket, player_id))
                     client_socket.close()
                 except Exception as ignored:
                     pass
 
+                # Broadcast message and exit thread
                 self.broadcast_message(json.dumps({
                     "status": "EXIT",
                     "message": f"Player {player_id} has left the game"
@@ -76,15 +89,27 @@ class CheckersServer:
                 break
 
     def process_move(self, client_socket: socket.socket, message: str) -> None:
+        # Process move from client
+
+        # Deserialize move
         move = json.loads(message)
+
+        # Validate move
         if self.game.validate_move(move):
+            # If move is valid, update game state
             self.game.move(move)
+            # Broadcast game state to all clients
             self.broadcast_game_state()
         else:
+            # If move is invalid, send message to client
             client_socket.send(json.dumps({"status": "Invalid move"}).encode())
 
     def broadcast_game_state(self) -> None:
+        # Broadcast game state to all clients
+
+        # Serialize game state
         game_state = json.dumps(self.game.state)
+        # Send game state to all clients
         for client, _ in self.clients:
             msg = json.dumps({
                 "status": "update",
