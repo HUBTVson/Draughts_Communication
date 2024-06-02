@@ -22,10 +22,25 @@ class CheckersClient:
             message = self.server.recv(1024).decode()
             if message:
                 data = json.loads(message)
-                self.game_state = data
-                self.render_board()
-                if self.game_state["turn"] == self.player_id:
+
+                if data["status"] == "EXIT":
+                    print(data["message"])
+                    self.server.close()
+                    exit()
+
+                elif data["status"] == "Invalid move":
+                    print("Invalid move. Try again.")
                     self.get_user_input()
+
+                elif data["status"] == "update":
+                    self.game_state = data["game_state"]
+                    self.render_board()
+                    if self.game_state["turn"] == self.player_id:
+                        self.get_user_input()
+
+                else:
+                    print("Unknown message")
+                    print(data)
 
     def send_move(self, start, end, captures=[]):
         move = {
@@ -33,7 +48,11 @@ class CheckersClient:
             "end": end,
             "captures": captures
         }
-        self.server.send(json.dumps(move).encode())
+        msg = json.dumps({
+            "status": "move",
+            "move": move
+        }).encode()
+        self.server.send(msg)
 
     def render_board(self):
         board = self.game_state["board"]
@@ -44,12 +63,13 @@ class CheckersClient:
     def get_user_input(self):
         start = input("Enter start position (row,col): ").split(',')
         end = input("Enter end position (row,col): ").split(',')
+
         start = (int(start[0]), int(start[1]))
         end = (int(end[0]), int(end[1]))
         self.send_move(start, end)
 
     def shutdown(self, signum, frame):
-        print("\nShutting down server...")
+        print("\nShutting down client...")
         self.server.close()
         exit()
 
