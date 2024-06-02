@@ -1,14 +1,12 @@
 import socket
 import threading
 import json
-import signal
 
 
 class CheckersClient:
     def __init__(self, host='localhost', port=5555):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.connect((host, port))
-        signal.signal(signal.SIGINT, self.shutdown)
         threading.Thread(target=self.listen_for_updates).start()
         self.game_state = None
         self.player_id = None
@@ -65,10 +63,7 @@ class CheckersClient:
             print(f"Player{self.player_id}'s turn")
             start = input("Enter start position (row,col): ").split(',')
             end = input("Enter end position (row,col): ").split(',')
-        except KeyboardInterrupt:
-            self.server.send(json.dumps({
-                "status": "EXIT"
-            }).encode())
+        except:
             self.shutdown(None, None)
 
         start = (int(start[0]), int(start[1]))
@@ -76,6 +71,9 @@ class CheckersClient:
         self.send_move(start, end)
 
     def shutdown(self, signum, frame):
+        self.server.send(json.dumps({
+            "status": "EXIT"
+        }).encode())
         print("\nShutting down client...")
         self.server.close()
         exit()

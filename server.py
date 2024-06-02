@@ -1,7 +1,6 @@
 import socket
 import threading
 import json
-import signal
 import numpy as np
 from checkers import Checkers
 from typing import Tuple, List
@@ -9,6 +8,8 @@ from typing import Tuple, List
 
 class CheckersServer:
     def __init__(self, host='localhost', port=5555) -> None:
+        self.host = host
+        self.port = port
         self.start_server(host, port)
         self.initialize_game()
 
@@ -20,7 +21,6 @@ class CheckersServer:
         print(f"Server started on {host}:{port}")
 
         self.lock = threading.Lock()
-        signal.signal(signal.SIGINT, self.shutdown)
 
     def initialize_game(self) -> None:
         self.game = Checkers()
@@ -45,29 +45,30 @@ class CheckersServer:
 
         # Restart server
         self.initialize_game()
+        self.start_server(self.host, self.port)
         self.start()
 
-    def handle_client(self, client_socket: socket.socket, player_id: int) -> None:
+    def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = False) -> None:
         while True:
             try:
                 message = client_socket.recv(1024).decode()
+                message = json.loads(message)
                 if message["status"] == "EXIT":
-                    self.clients.remove(client_socket)
-                    client_socket.close()
-                    self.broadcast_message(json.dumps({
-                        "status": "EXIT",
-                        "message": f"Player {player_id} has left the game"
-                    }))
-                    break
+                    raise Exception("Client exited")
 
                 if message["status"] == "move":
                     with self.lock:
                         if self.game.turn == player_id:
                             self.process_move(client_socket, message)
-            except:
-                if client_socket in self.clients:
-                    self.clients.remove(client_socket)
+            except Exception as e:
+                if debug:
+                    print(e)
+                try:
+                    self.clients.remove((client_socket, player_id))
                     client_socket.close()
+                except Exception as ignored:
+                    pass
+
                 self.broadcast_message(json.dumps({
                     "status": "EXIT",
                     "message": f"Player {player_id} has left the game"
