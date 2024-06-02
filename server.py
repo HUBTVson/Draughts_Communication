@@ -131,7 +131,7 @@ class CheckersServer:
 
             # Add client to list of clients
             self.clients.append((client_socket, player_id))
-            print(f"{player_id} connected from {addr}")
+            print(f"Player {player_id} connected from {addr}")
 
             # Start a new thread to handle client
             thread = threading.Thread(target=self.handle_client, args=(
