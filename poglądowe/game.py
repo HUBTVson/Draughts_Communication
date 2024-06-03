@@ -65,7 +65,7 @@ class Game:
         print("\n\n\n\t\t\t" + winner.get_name_player() + " IS THE WINNER!!!!!")
 
     def process_move(self, move, player_id):
-        coordinates = move['coordinates']
+        coordinates = move
         coordinates = self.convert_int(coordinates)
 
         playing = self.get_player1() if player_id == 'player1' else self.get_player2()

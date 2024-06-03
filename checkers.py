@@ -1,20 +1,15 @@
+from poglądowe.game import Game
+
+
 class Checkers():
     def __init__(self) -> None:
-        self._board = [
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [2, 0, 2, 0, 2, 0, 2, 0],
-            [0, 2, 0, 2, 0, 2, 0, 2],
-            [2, 0, 2, 0, 2, 0, 2, 0]
-        ]
+        self.game = Game()
         self._turn = 1
         
 
     def validate_move(self, move: dict) -> None:
         # Check if the move is valid
+        self.game.process_move(self, move, self.game.pl)
         return True
 
     def move(self, move: dict) -> None:
