@@ -106,7 +106,7 @@ class CheckersServer:
         # Broadcast game state to all clients
 
         # Serialize game state
-        game_state = json.dumps(self.game.state_str)
+        game_state = json.dumps(self.game.state)
         # Send game state to all clients
         for client, _ in self.clients:
             msg = json.dumps({

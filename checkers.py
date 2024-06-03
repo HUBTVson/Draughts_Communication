@@ -6,7 +6,6 @@ class Checkers():
         self.game = Game()
         self._turn = 1
 
-
     def move(self, move: dict) -> bool:
         # Update the board with the new move and switch turns
         if self.game.process_move(move, self._turn):

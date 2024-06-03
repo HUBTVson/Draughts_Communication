@@ -51,14 +51,10 @@ class CheckersClient:
         # Send move to server
 
         move = {
-            "from_x": start[0],
-            "from_y": start[1],
-            "to_x": end[0],
-            "to_y": end[1]
             # CHANGE HERE START
-            # "start": start,
-            # "end": end,
-            # "captures": captures
+            "start": start,
+            "end": end,
+            "captures": captures
             # CHANGE HERE END
         }
 

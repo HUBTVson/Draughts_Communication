@@ -8,6 +8,7 @@ import json
 
 colorama.init()
 
+
 class Game:
     def __init__(self):
         self.clear_text = ""
@@ -23,7 +24,7 @@ class Game:
         Board.clear_text = self.clear_text
 
     def clear_console(self):
-        clear = lambda: os.system(self.clear_text)
+        def clear(): return os.system(self.clear_text)
         clear()
 
     def add_players(self):
@@ -34,7 +35,8 @@ class Game:
         self.elements['board'] = Board(8)
 
     def fill_board(self):
-        self.elements['board'].generate_squares(self.elements['player1'], self.elements['player2'])
+        self.elements['board'].generate_squares(
+            self.elements['player1'], self.elements['player2'])
 
     def draw_board(self):
         self.elements['board'].draw_matrix()
@@ -60,7 +62,8 @@ class Game:
         return self.elements['player2']
 
     def show_winner(self):
-        winner = self.get_player1() if self.get_player2().get_amount_pieces() <= 0 else self.get_player2()
+        winner = self.get_player1() if self.get_player2(
+        ).get_amount_pieces() <= 0 else self.get_player2()
         self.clear_console()
         print("\n\n\n\t\t\t" + winner.get_name_player() + " IS THE WINNER!!!!!")
 
@@ -86,6 +89,7 @@ class Game:
         }
 
     @property
-    def state_str(self):
-        board = self.elements['board'].matrix
-        board_str = ""
+    def state(self):
+        board = self.elements['board']
+        # przerobić board na matrix zer, jedynek i dwójek
+        return board
