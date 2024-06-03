@@ -53,7 +53,7 @@ class CheckersServer:
         self.start_server(self.host, self.port)
         self.start()
 
-    def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = False) -> None:
+    def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = True) -> None:
         while True:
             try:
                 # Receive message from client
@@ -89,7 +89,7 @@ class CheckersServer:
                 }))
                 break
 
-    #Wtf is going on here it doesn't come into process move xD Zweryfikuj to Kubuś xD Ja Zw
+    #Wtf is going on here it doesn't come into process move xD Zweryfikuj to Kubuś xD Ja Zw k0od w moim branchu
     def process_move(self, client_socket: socket.socket, move) -> None:
         # Process move from client
 
