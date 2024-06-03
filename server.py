@@ -67,6 +67,7 @@ class CheckersServer:
 
                 # Process move
                 if message["status"] == "move":
+                    message = message["move"]
                     with self.lock:
                         if self.game.turn == player_id:
                             self.process_move(client_socket, message)
@@ -88,11 +89,8 @@ class CheckersServer:
                 }))
                 break
 
-    def process_move(self, client_socket: socket.socket, message: str) -> None:
+    def process_move(self, client_socket: socket.socket, move: str) -> None:
         # Process move from client
-
-        # Deserialize move
-        move = json.loads(message)
 
         # Validate move
         if self.game.validate_move(move):
