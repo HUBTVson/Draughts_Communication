@@ -1,10 +1,9 @@
 import colorama
 from colorama import Fore, Style
-from poglądowe.player import Player
-from poglądowe.board import Board
+from player import Player
+from board import Board
 import os
 import platform
-import json
 
 colorama.init()
 

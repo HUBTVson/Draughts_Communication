@@ -1,11 +1,10 @@
-import os
 import socket
 import threading
 import json
 from colorama import Fore, Style
 
-from poglądowe.piece import Piece
-from poglądowe.square import Square
+from piece import Piece
+from square import Square
 
 
 class CheckersClient:

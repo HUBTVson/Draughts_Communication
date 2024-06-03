@@ -1,11 +1,12 @@
-from poglądowe.game import Game
+from game import Game
 
 
 class Checkers():
     def __init__(self) -> None:
         self.game = Game()
         self._turn = 0
-        self.players = [self.game.elements['player1'], self.game.elements['player2']]
+        self.players = [self.game.elements['player1'],
+                        self.game.elements['player2']]
 
     def move(self, move: dict) -> bool:
         # Update the board with the new move and switch turns
