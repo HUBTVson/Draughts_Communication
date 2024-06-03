@@ -89,14 +89,23 @@ class CheckersServer:
                 }))
                 break
 
-    #Wtf is going on here it doesn't come into process move xD Zweryfikuj to Kubuś xD Ja Zw k0od w moim branchu
     def process_move(self, client_socket: socket.socket, move) -> None:
         # Process move from client
 
         # Validate move
         if self.game.move(move):
-            # Broadcast game state to all clients
-            self.broadcast_game_state()
+            winner = self.game.winner
+            if winner is not None:
+                # If game has ended, broadcast message to clients
+                msg = json.dumps({
+                    "status": "EXIT",
+                    "message": f"Player {winner} has won the game"
+                })
+                self.broadcast_message(msg)
+                self.restart_server()
+            else:
+                # Broadcast game state to all clients
+                self.broadcast_game_state()
         else:
             # If move is invalid, send message to client
             client_socket.send(json.dumps({"status": "Invalid move"}).encode())

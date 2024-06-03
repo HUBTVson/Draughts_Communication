@@ -15,6 +15,7 @@ class Checkers():
         move_tmp['from_y'] = int(move['from_y'] - 1)
         move_tmp['to_x'] = int(move['to_x'] - 1)
         move_tmp['to_y'] = int(move['to_y'] - 1)
+
         if self.game.elements['board'].verify_moves(move_tmp, self.players[self._turn], self.game.elements['board'].difference_between_and_direction(move_tmp)):
             self.game.process_move(move, self._turn)
             self.turn += 1
@@ -42,3 +43,7 @@ class Checkers():
     @property
     def board(self) -> list:
         return self.game.state
+
+    @property
+    def winner(self) -> int | None:
+        return self.game.get_winner()

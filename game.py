@@ -59,6 +59,13 @@ class Game:
 
     def get_player2(self):
         return self.elements['player2']
+    
+    def get_winner(self):
+        if self.get_player1().get_amount_pieces() <= 0:
+            return 0
+        if self.get_player2().get_amount_pieces() <= 0:
+            return 1
+        return None
 
     def show_winner(self):
         winner = self.get_player1() if self.get_player2(
