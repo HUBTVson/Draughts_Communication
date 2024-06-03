@@ -8,7 +8,8 @@ class Checkers():
 
     def move(self, move: dict) -> bool:
         # Update the board with the new move and switch turns
-        if self.game.process_move(move, self._turn):
+        if self.game.elements['board'].verify_moves(move, self._turn, self.game.elements['board'].difference_between_directions(move)):
+            self.game.process_move(move, self._turn)
             self.turn += 1
             print(self._turn)
             return True

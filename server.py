@@ -89,7 +89,8 @@ class CheckersServer:
                 }))
                 break
 
-    def process_move(self, client_socket: socket.socket, move: str) -> None:
+    #Wtf is going on here it doesn't come into process move xD Zweryfikuj to Kubuś xD Ja Zw
+    def process_move(self, client_socket: socket.socket, move) -> None:
         # Process move from client
 
         # Validate move
