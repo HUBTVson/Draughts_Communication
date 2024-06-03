@@ -5,16 +5,17 @@ class Checkers():
     def __init__(self) -> None:
         self.game = Game()
         self._turn = 1
-        
 
-    def validate_move(self, move: dict) -> None:
-        # Check if the move is valid
-        self.game.process_move(self, move, self.game.pl)
-        return True
 
-    def move(self, move: dict) -> None:
+    def move(self, move: dict) -> bool:
         # Update the board with the new move and switch turns
-        pass
+        if self.game.process_move(move, self._turn):
+            self.turn += 1
+            print(self._turn)
+            return True
+        else:
+            print("Invalid move")
+            return False
 
     @property
     def state(self) -> dict:
@@ -33,4 +34,4 @@ class Checkers():
 
     @property
     def board(self) -> list:
-        return self._board
+        return self.game.elements['board']

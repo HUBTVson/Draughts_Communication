@@ -95,9 +95,7 @@ class CheckersServer:
         move = json.loads(message)
 
         # Validate move
-        if self.game.validate_move(move):
-            # If move is valid, update game state
-            self.game.move(move)
+        if self.game.move(move):
             # Broadcast game state to all clients
             self.broadcast_game_state()
         else:
@@ -108,7 +106,7 @@ class CheckersServer:
         # Broadcast game state to all clients
 
         # Serialize game state
-        game_state = json.dumps(self.game.state)
+        game_state = json.dumps(self.game.state_str)
         # Send game state to all clients
         for client, _ in self.clients:
             msg = json.dumps({
@@ -118,7 +116,7 @@ class CheckersServer:
             client.send(msg.encode())
 
     def start(self) -> None:
-        player_ids = [1, 2]
+        player_ids = [0, 1]
         workers = []
 
         while len(self.clients) < 2:

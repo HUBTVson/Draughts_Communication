@@ -73,10 +73,10 @@ class Game:
 
         forced_movements = self.forced_movements(playing)
         if forced_movements != [] and [coordinates] not in forced_movements:
-            return False, "Mandatory movements"
+            return False
 
         playing = self.make_move(coordinates, playing, opponent)
-        return True, "Move successful"
+        return True
 
     def get_game_state(self):
         return {
@@ -84,3 +84,8 @@ class Game:
             'player1_pieces': self.get_player1().get_amount_pieces(),
             'player2_pieces': self.get_player2().get_amount_pieces(),
         }
+
+    @property
+    def state_str(self):
+        board = self.elements['board'].matrix
+        board_str = ""
