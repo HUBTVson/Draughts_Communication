@@ -86,6 +86,12 @@ class CheckersClient:
                     new_row[column].piece = Piece(Fore.GREEN)
                 elif board[row][column] == -1:
                     new_row[column].piece = Piece(Fore.RED)
+                elif board[row][column] == 2:
+                    new_row[column].piece = Piece(Fore.GREEN)
+                    new_row[column].piece.convert_to_queen()
+                elif board[row][column] == -2:
+                    new_row[column].piece = Piece(Fore.RED)
+                    new_row[column].piece.convert_to_queen()
             new_board.append(new_row)
 
         draw_b = 'x→ '
