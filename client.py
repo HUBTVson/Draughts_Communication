@@ -79,10 +79,8 @@ class CheckersClient:
             new_row = []
             for column in range(8):
                 if (row + column) % 2 == 0:
-                    print(column)
                     new_row.append(Square(Fore.WHITE))
                 else:
-                    print(column)
                     new_row.append(Square(Fore.BLACK))
 
                 if board[row][column] == 1:

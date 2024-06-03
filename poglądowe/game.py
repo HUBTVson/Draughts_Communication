@@ -71,7 +71,7 @@ class Game:
         coordinates = move
         coordinates = self.convert_int(coordinates)
 
-        playing = self.get_player1() if player_id == 'player1' else self.get_player2()
+        playing = self.get_player1() if player_id == 0 else self.get_player2()
         opponent = self.get_player1() if playing == self.get_player2() else self.get_player2()
 
         forced_movements = self.forced_movements(playing)
