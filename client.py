@@ -1,6 +1,10 @@
 import socket
 import threading
 import json
+from colorama import Fore, Style
+
+from piece import Piece
+from square import Square
 
 
 class CheckersClient:
@@ -51,11 +55,10 @@ class CheckersClient:
         # Send move to server
 
         move = {
-            # CHANGE HERE START
-            "start": start,
-            "end": end,
-            "captures": captures
-            # CHANGE HERE END
+            "from_x": start[0],
+            "from_y": start[1],
+            "to_x": end[0],
+            "to_y": end[1]
         }
 
         # Serialize move and send to server
@@ -70,9 +73,39 @@ class CheckersClient:
 
         # ADD PRETTY PRINTING
         board = self.game_state["board"]
-        for row in board:
-            print(' '.join(map(str, row)))
-        print()
+        new_board = []
+        for row in range(8):
+            new_row = []
+            for column in range(8):
+                if (row + column) % 2 == 0:
+                    new_row.append(Square(Fore.WHITE))
+                else:
+                    new_row.append(Square(Fore.BLACK))
+
+                if board[row][column] == 1:
+                    new_row[column].piece = Piece(Fore.GREEN)
+                elif board[row][column] == -1:
+                    new_row[column].piece = Piece(Fore.RED)
+            new_board.append(new_row)
+
+        draw_b = 'x→ '
+        reset = Style.RESET_ALL
+        con = 0
+        for a in range(1, 9):
+            draw_b += str(a) + ' '
+        draw_b += ' y↓'
+        draw_b += '\n'
+        for row in new_board:
+            draw_b += '   '
+            for col in row:
+                if col.is_piece_inside():
+                    piece_string = col.get_piece().get_character() + ' '
+                    draw_b += col.piece_color() + piece_string + reset
+                else:
+                    draw_b += col.color + '■ ' + reset
+            con += 1
+            draw_b += '|' + str(con) + '\n'
+        print(draw_b)
 
     def get_user_input(self):
         # Get user input for move

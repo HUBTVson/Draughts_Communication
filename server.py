@@ -53,7 +53,7 @@ class CheckersServer:
         self.start_server(self.host, self.port)
         self.start()
 
-    def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = False) -> None:
+    def handle_client(self, client_socket: socket.socket, player_id: int, debug: bool = True) -> None:
         while True:
             try:
                 # Receive message from client
@@ -89,13 +89,12 @@ class CheckersServer:
                 }))
                 break
 
-    def process_move(self, client_socket: socket.socket, move: str) -> None:
+    #Wtf is going on here it doesn't come into process move xD Zweryfikuj to Kubuś xD Ja Zw k0od w moim branchu
+    def process_move(self, client_socket: socket.socket, move) -> None:
         # Process move from client
 
         # Validate move
-        if self.game.validate_move(move):
-            # If move is valid, update game state
-            self.game.move(move)
+        if self.game.move(move):
             # Broadcast game state to all clients
             self.broadcast_game_state()
         else:
@@ -116,7 +115,7 @@ class CheckersServer:
             client.send(msg.encode())
 
     def start(self) -> None:
-        player_ids = [1, 2]
+        player_ids = [0, 1]
         workers = []
 
         while len(self.clients) < 2:

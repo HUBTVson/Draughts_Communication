@@ -1,12 +1,12 @@
 import colorama
 from colorama import Fore, Style
-from poglądowe.player import Player
-from poglądowe.board import Board
+from player import Player
+from board import Board
 import os
 import platform
-import json
 
 colorama.init()
+
 
 class Game:
     def __init__(self):
@@ -23,7 +23,7 @@ class Game:
         Board.clear_text = self.clear_text
 
     def clear_console(self):
-        clear = lambda: os.system(self.clear_text)
+        def clear(): return os.system(self.clear_text)
         clear()
 
     def add_players(self):
@@ -34,7 +34,8 @@ class Game:
         self.elements['board'] = Board(8)
 
     def fill_board(self):
-        self.elements['board'].generate_squares(self.elements['player1'], self.elements['player2'])
+        self.elements['board'].generate_squares(
+            self.elements['player1'], self.elements['player2'])
 
     def draw_board(self):
         self.elements['board'].draw_matrix()
@@ -60,23 +61,24 @@ class Game:
         return self.elements['player2']
 
     def show_winner(self):
-        winner = self.get_player1() if self.get_player2().get_amount_pieces() <= 0 else self.get_player2()
+        winner = self.get_player1() if self.get_player2(
+        ).get_amount_pieces() <= 0 else self.get_player2()
         self.clear_console()
         print("\n\n\n\t\t\t" + winner.get_name_player() + " IS THE WINNER!!!!!")
 
     def process_move(self, move, player_id):
-        coordinates = move['coordinates']
+        coordinates = move
         coordinates = self.convert_int(coordinates)
 
-        playing = self.get_player1() if player_id == 'player1' else self.get_player2()
+        playing = self.get_player1() if player_id == 0 else self.get_player2()
         opponent = self.get_player1() if playing == self.get_player2() else self.get_player2()
 
         forced_movements = self.forced_movements(playing)
         if forced_movements != [] and [coordinates] not in forced_movements:
-            return False, "Mandatory movements"
+            return False
 
         playing = self.make_move(coordinates, playing, opponent)
-        return True, "Move successful"
+        return True
 
     def get_game_state(self):
         return {
@@ -84,3 +86,29 @@ class Game:
             'player1_pieces': self.get_player1().get_amount_pieces(),
             'player2_pieces': self.get_player2().get_amount_pieces(),
         }
+
+    @property
+    def state(self):
+        board = self.elements['board'].matrix
+        new_board = []
+        for row in board:
+            new_row = []
+            for square in row:
+                if square.piece:
+                    color = 'black' if square.piece.p_color == '\x1b[33m' else 'white'
+                    is_queen = square.piece.is_queen
+                    if color == 'black':
+                        if is_queen:
+                            new_row.append(2)
+                        else:
+                            new_row.append(1)
+                    else:
+                        if is_queen:
+                            new_row.append(-2)
+                        else:
+                            new_row.append(-1)
+                else:
+                    new_row.append(0)
+            new_board.append(new_row)
+        # przerobić board na matrix zer, jedynek i dwójek
+        return new_board
