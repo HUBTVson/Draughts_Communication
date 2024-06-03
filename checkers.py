@@ -33,4 +33,4 @@ class Checkers():
 
     @property
     def board(self) -> list:
-        return self.game.elements['board']
+        return self.game.state

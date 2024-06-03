@@ -90,6 +90,26 @@ class Game:
 
     @property
     def state(self):
-        board = self.elements['board']
+        board = self.elements['board'].matrix
+        new_board = []
+        for row in board:
+            new_row = []
+            for square in row:
+                if square.piece:
+                    color = 'black' if square.piece.p_color == '\x1b[33m' else 'white'
+                    is_queen = square.piece.is_queen
+                    if color == 'black':
+                        if is_queen:
+                            new_row.append(2)
+                        else:
+                            new_row.append(1)
+                    else:
+                        if is_queen:
+                            new_row.append(-2)
+                        else:
+                            new_row.append(-1)
+                else:
+                    new_row.append(0)
+            new_board.append(new_row)
         # przerobić board na matrix zer, jedynek i dwójek
-        return board
+        return new_board
