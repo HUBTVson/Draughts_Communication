@@ -30,6 +30,7 @@ Connects to the server to send and receive game moves.
 ### • Client B (Player 1):
 Connects to the server to send and receive game moves.
 ## Diagram representing classes and relations between them
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/b2f404b3-0553-4a7e-8fce-8e51fb4d93c4)
 
 
 # 4. Communication Protocol
