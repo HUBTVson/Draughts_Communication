@@ -2,7 +2,7 @@
 # Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
 # 1. Project Idea
-The project is aimed to present the basic communication between the server and client in the droughts game board.
+The project is aimed to present the basic communication between the server and client in the draughts game board.
 
 
 # 2. Game Idea
@@ -17,12 +17,8 @@ Captures are made by jumping over an opponent's piece onto an empty square immed
 Multiple captures can be made in a single turn if the opportunity arises, creating a strategic element of the game.
 
 # 3. Technology selection
-Programming language: Python
-Application: Console
-Libraries: signal, socket
+
 
 
 # 4. Division of responsibilities
-Hubert Twardowski- Implementation of initial client
-Jakub Kondracki- Implementation of initial server
-Jakub Janicki-  Implementation of initial communication between client and server game
+
