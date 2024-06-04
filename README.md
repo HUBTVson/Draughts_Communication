@@ -54,7 +54,6 @@ Sends player moves to the server and processes game state updates from the serve
 ### 3. Game Logic
 
 # 6. Example Session
-### uuuuaaaaa te kolory pionków fajnie by było dopasować 
 ## Server Output:
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/b161b091-c369-4314-8406-bd1efc0b6f3b)
 
