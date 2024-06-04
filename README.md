@@ -51,10 +51,16 @@ Sends player moves to the server and processes game state updates from the serve
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 6. Example Session
-## Server Output
+## Server Output:
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/b161b091-c369-4314-8406-bd1efc0b6f3b)
 
-## Client A Output
-## Client B Output
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/ae30d62c-339d-4240-a879-8a0707658ddf)
+
+## Client A Output:
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/bdbe14eb-761d-4f86-b462-86d5fc275f91)
+
+## Client B Output:
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/a8f9df71-bb2c-4009-b2b6-19f3a2986419)
 
 
 # 7. Conclusion
