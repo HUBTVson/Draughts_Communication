@@ -23,7 +23,7 @@ Captures are made by jumping over an opponent's piece onto an empty square immed
 Multiple captures can be made in a single turn if the opportunity arises, creating a strategic element of the game.
 
 # 3. System Architecture
-##The system consists of 3 main components:
+## The system consists of 3 main components:
 ### Server:
 Handles the game state and communication between clients.
 ### Client A (Player 0):
@@ -35,17 +35,17 @@ Connects to the server to send and receive game moves.
 # 4. Communication Protocol
 
 
-# 5. 
-# Main Components:
-# 1.Server Implementation
-# *Server Initialization:
+# 5. Implementation
+## Main Components:
+### 1.Server Implementation
+#### *Server Initialization:
 Sets up yhe server socket and listens for ingoing connections.
-# *Client Handler:
+#### *Client Handler:
 Sets up yhe server socket and listens for ingoing connections.
-# 2.Client Implementation
-# *Client Initialization:
+### 2.Client Implementation
+#### *Client Initialization:
 Sets up the client socket and connects to the server.
-# *Message Handling:
+##### *Message Handling:
 Sends player moves to the server and processes game state updates from the server.
-# 3.Game Logic
+### 3.Game Logic
 
