@@ -48,6 +48,7 @@ Sets up yhe server socket and listens for ingoing connections.
 Sets up the client socket and connects to the server.
 ##### • Message Handling:
 Sends player moves to the server and processes game state updates from the server.
+
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/63b1c823-984f-4637-b698-047cf37d40e4)
 
 ### 3. Game Logic
