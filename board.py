@@ -35,19 +35,19 @@ class Board:
                             player1.add_piece(
                                 Piece(player1.get_player_color()))
                             aux.append(
-                                Square(Fore.RED, player1.get_last_piece()))
+                                Square(Fore.LIGHTBLACK_EX, player1.get_last_piece()))
                         else:
                             player2.add_piece(
                                 Piece(player2.get_player_color()))
                             aux.append(
-                                Square(Fore.RED, player2.get_last_piece()))
+                                Square(Fore.LIGHTBLACK_EX, player2.get_last_piece()))
                         i = True
                 else:
                     if i:
                         aux.append(Square(Fore.WHITE))
                         i = False
                     else:
-                        aux.append(Square(Fore.RED))
+                        aux.append(Square(Fore.LIGHTBLACK_EX))
                         i = True
                 x += 1
 
