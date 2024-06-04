@@ -33,19 +33,34 @@ Connects to the server to send and receive game moves.
 ## Diagrams !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 4. Communication Protocol
-
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 5. Implementation
 ## Main Components:
-### 1.Server Implementation
+### 1. Server Implementation
 #### • Server Initialization:
 Sets up yhe server socket and listens for ingoing connections.
 #### • Client Handler:
 Sets up yhe server socket and listens for ingoing connections.
-### 2.Client Implementation
+### 2. Client Implementation
 #### • Client Initialization:
 Sets up the client socket and connects to the server.
 ##### • Message Handling:
 Sends player moves to the server and processes game state updates from the server.
-### 3.Game Logic
+### 3. Game Logic
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# 6. Example Session
+## Server Output
+
+## Client A Output
+## Client B Output
+
+
+# 7. Conclusion
+
+
+
+
+
 
