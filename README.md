@@ -24,7 +24,7 @@ Multiple captures can be made in a single turn if the opportunity arises, creati
 
 # 3. System Architecture
 The system consists of 3 main components:
-# Server:
+## Server:
 Handles the game state and communication between clients.
 # Client A (Player 0):
 Connects to the server to send and receive game moves.
