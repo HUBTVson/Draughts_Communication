@@ -29,7 +29,8 @@ Handles the game state and communication between clients.
 Connects to the server to send and receive game moves.
 ### • Client B (Player 1):
 Connects to the server to send and receive game moves.
-## Diagrams !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+## Diagram representing classes and relations between them
+
 
 # 4. Communication Protocol
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -61,7 +62,6 @@ Sends player moves to the server and processes game state updates from the serve
 
 ## Client B Output:
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/a8f9df71-bb2c-4009-b2b6-19f3a2986419)
-
 
 # Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
