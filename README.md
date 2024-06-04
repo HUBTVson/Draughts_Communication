@@ -1,5 +1,5 @@
 # Draughts Game Console - Solution Documentation
-# Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
+
 # Table of Contents
 1. Introduction
 2. Game Idea
@@ -64,7 +64,7 @@ Sends player moves to the server and processes game state updates from the serve
 
 
 # Zostaw suba z dzwoneczkiem
-
+# Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
 
 
