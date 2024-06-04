@@ -38,7 +38,7 @@ Connects to the server to send and receive game moves.
 # 5. Implementation
 ## Main Components:
 ### 1.Server Implementation
-#### *Server Initialization:
+#### * Server Initialization:
 Sets up yhe server socket and listens for ingoing connections.
 #### *Client Handler:
 Sets up yhe server socket and listens for ingoing connections.
