@@ -23,14 +23,14 @@ Captures are made by jumping over an opponent's piece onto an empty square immed
 Multiple captures can be made in a single turn if the opportunity arises, creating a strategic element of the game.
 
 # 3. System Architecture
-The system consists of 3 main components:
-## Server:
+##The system consists of 3 main components:
+### Server:
 Handles the game state and communication between clients.
-# Client A (Player 0):
+### Client A (Player 0):
 Connects to the server to send and receive game moves.
-# Client B (Player 1):
+### Client B (Player 1):
 Connects to the server to send and receive game moves.
-# Diagrams !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+## Diagrams !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 4. Communication Protocol
 
