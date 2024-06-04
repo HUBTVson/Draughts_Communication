@@ -63,7 +63,6 @@ Sends player moves to the server and processes game state updates from the serve
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/a8f9df71-bb2c-4009-b2b6-19f3a2986419)
 
 
-# Zostaw suba z dzwoneczkiem
 # Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
 
