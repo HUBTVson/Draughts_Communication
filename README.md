@@ -7,7 +7,6 @@
 4. Communication Protocol
 5. Implementation
 6. Example Session
-7. Conclusion
 
 # 1. Introduction
 Documents provides a detailed overwiev of a console-based Draughts game that is played between two clients connected to the server. The game is implemented in Python language and enable the real-time communication between players.
@@ -51,6 +50,7 @@ Sends player moves to the server and processes game state updates from the serve
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # 6. Example Session
+### uuuuaaaaa te kolory pionków fajnie by było dopasować 
 ## Server Output:
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/b161b091-c369-4314-8406-bd1efc0b6f3b)
 
@@ -63,7 +63,7 @@ Sends player moves to the server and processes game state updates from the serve
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/a8f9df71-bb2c-4009-b2b6-19f3a2986419)
 
 
-# 7. Conclusion
+# Zostaw suba z dzwoneczkiem
 
 
 
