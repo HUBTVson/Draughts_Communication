@@ -45,9 +45,9 @@ class CheckersClient:
 
             except (KeyboardInterrupt, EOFError):
                 print("info Keyboard interrupt")
-                self.shutdown(None, None)
+                self.send_exit_message()
             if input_str == "quit".casefold():
-                self.shutdown(None, None)
+                self.send_exit_message()
 
             self._input_queue.put(input_str)
 
@@ -177,11 +177,13 @@ class CheckersClient:
         end = (int(end[0]), int(end[1]))
         self.send_move(start, end)
 
-    def shutdown(self, signum, frame):
+    def send_exit_message(self):
         # Send exit message to server
         self.server.send(json.dumps({
             "status": "EXIT"
         }).encode())
+
+    def shutdown(self, signum, frame):
         # Shutdown client
         print("\nShutting down client...")
         self.server.close()

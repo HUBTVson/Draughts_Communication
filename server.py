@@ -75,13 +75,6 @@ class CheckersServer:
                 if debug:
                     print(e)
 
-                # Remove client from list of clients
-                try:
-                    self.clients.remove((client_socket, player_id))
-                    client_socket.close()
-                except Exception as ignored:
-                    pass
-
                 # Broadcast message and exit thread
                 self.broadcast_message(json.dumps({
                     "status": "EXIT",
