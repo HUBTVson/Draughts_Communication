@@ -32,11 +32,7 @@ Connects to the server to send and receive game moves.
 ## Diagram representing classes and relations between them
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/b2f404b3-0553-4a7e-8fce-8e51fb4d93c4)
 
-
-# 4. Communication Protocol
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-# 5. Implementation
+# 4. Implementation
 ## Main Components:
 ### 1. Server Implementation
 #### • Server Initialization:
@@ -50,7 +46,7 @@ Sets up the client socket and connects to the server.
 Sends player moves to the server and processes game state updates from the server.
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/63b1c823-984f-4637-b698-047cf37d40e4)
 
-# 6. Example Session
+# 5. Example Session
 ## Server Output:
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/b161b091-c369-4314-8406-bd1efc0b6f3b)
 
