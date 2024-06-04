@@ -4,7 +4,7 @@
 1. Introduction
 2. Game Idea
 3. System Architecture
-4. Communication Protocol
+4. [Communication Protocol](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#4-communication-protocol)
 5. Implementation
 6. Example Session
 
