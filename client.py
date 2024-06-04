@@ -48,6 +48,8 @@ class CheckersClient:
                 self.send_exit_message()
             if input_str == "quit".casefold():
                 self.send_exit_message()
+                self._input_queue.put(input_str)
+                exit()
 
             self._input_queue.put(input_str)
 
@@ -157,13 +159,13 @@ class CheckersClient:
 
             print("Enter start position (row,col) or 'quit' to exit:")
             start = self._input_queue.get(block=True)
-            # if start == "quit":
-            #     self.shutdown(None, None)
+            if start == "quit":
+                self.shutdown(None, None)
 
             print("Enter end position (row,col):")
             end = self._input_queue.get(block=True)
-            # if end == "quit":
-            #     self.shutdown(None, None)
+            if end == "quit":
+                self.shutdown(None, None)
 
             # # CHANGE HERE START
             # start = input("Enter start position (row,col): ").split(',')
