@@ -4,9 +4,8 @@
 1. [Introduction](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#1-introduction)
 2. [Game Idea](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#2-game-idea)
 3. [System Architecture](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#3-system-architecture)
-4. [Communication Protocol](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#4-communication-protocol)
-5. [Implementation](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#5-implementation)
-6. [Example Session](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#6-example-session)
+4. [Implementation](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#5-implementation)
+5. [Example Session](https://github.com/HUBTVson/Draughts_Communication/blob/main/README.md#6-example-session)
 
 # 1. Introduction
 Documents provides a detailed overwiev of a console-based Draughts game that is played between two clients connected to the server. The game is implemented in Python language and enable the real-time communication between players.
