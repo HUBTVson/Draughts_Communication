@@ -117,5 +117,4 @@ class Game:
                 else:
                     new_row.append(0)
             new_board.append(new_row)
-        # przerobić board na matrix zer, jedynek i dwójek
         return new_board
