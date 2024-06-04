@@ -35,6 +35,7 @@ class CheckersClient:
                 while not self._input_interrupt:
                     last_key = msvcrt.getwche()
                     if last_key in input_stoppers:
+                        print()
                         break
                     if last_key == '\b':
                         if input_str:
