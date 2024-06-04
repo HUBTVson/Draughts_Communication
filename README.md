@@ -52,10 +52,11 @@ Sends player moves to the server and processes game state updates from the serve
 ![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/ae30d62c-339d-4240-a879-8a0707658ddf)
 
 ## Client A Output:
-![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/bdbe14eb-761d-4f86-b462-86d5fc275f91)
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/4f09d21b-4a9d-48b0-a7b8-cdc28226e897)
 
 ## Client B Output:
-![image](https://github.com/HUBTVson/Draughts_Communication/assets/120310542/a8f9df71-bb2c-4009-b2b6-19f3a2986419)
+![image](https://github.com/HUBTVson/Draughts_Communication/assets/128641214/17fc5888-68e0-44bc-831f-bcd729f8cc64)
+
 
 # Authors: Janicki Jakub, Kondracki Jakub, Twardowski Hubert
 
