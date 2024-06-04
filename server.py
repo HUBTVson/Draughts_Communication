@@ -127,26 +127,30 @@ class CheckersServer:
         player_ids = [0, 1]
         workers = []
 
-        while len(self.clients) < 2:
-            # Accept connection from client
-            client_socket, addr = self.server.accept()
+        try:
+            while len(self.clients) < 2:
+                # Accept connection from client
+                client_socket, addr = self.server.accept()
 
-            # Assign player id to client
-            player_id = np.random.choice(player_ids)
-            player_ids.remove(player_id)
+                # Assign player id to client
+                player_id = np.random.choice(player_ids)
+                player_ids.remove(player_id)
 
-            # Add client to list of clients
-            self.clients.append((client_socket, player_id))
-            print(f"Player {player_id} connected from {addr}")
+                # Add client to list of clients
+                self.clients.append((client_socket, player_id))
+                print(f"Player {player_id} connected from {addr}")
 
-            # Start a new thread to handle client
-            thread = threading.Thread(target=self.handle_client, args=(
-                client_socket, player_id))
-            workers.append(thread)
-            thread.start()
+                # Start a new thread to handle client
+                thread = threading.Thread(target=self.handle_client, args=(
+                    client_socket, player_id))
+                workers.append(thread)
+                thread.start()
 
-            # Send player id to client
-            client_socket.send(str(player_id).encode())
+                # Send player id to client
+                client_socket.send(str(player_id).encode())
+        except Exception as e:
+            print(e)
+            self.restart_server()
 
         self.broadcast_game_state()
 

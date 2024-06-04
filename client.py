@@ -1,7 +1,9 @@
+import queue
 import socket
 import threading
 import json
 from colorama import Fore, Style
+import msvcrt
 
 from piece import Piece
 from square import Square
@@ -11,9 +13,43 @@ class CheckersClient:
     def __init__(self, host='localhost', port=5555):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.connect((host, port))
-        threading.Thread(target=self.listen_for_updates).start()
+        self._input_queue = queue.Queue()
+        self._input_interrupt = False
         self.game_state = None
         self.player_id = None
+        self.input_thread = threading.Thread(
+            target=self._safe_input, daemon=True)
+        self.input_thread.start()
+        self.listen_for_updates()
+
+    def _safe_input(self) -> str:
+        """Read input, handle "quit" command, KeyboardInterrupt and EOFError"""
+
+        # wait for input unless the input_interrupt is set
+        input_stoppers = ['\r', '\n']
+        while not self._input_interrupt:
+            try:
+                input_str = ""
+                last_key = None
+
+                while not self._input_interrupt:
+                    last_key = msvcrt.getwche()
+                    if last_key in input_stoppers:
+                        break
+                    if last_key == '\b':
+                        if input_str:
+                            input_str = input_str[:-1]
+                            print(' \b', end='', flush=True)
+
+                    input_str += last_key
+
+            except (KeyboardInterrupt, EOFError):
+                print("info Keyboard interrupt")
+                self.shutdown(None, None)
+            if input_str == "quit".casefold():
+                self.shutdown(None, None)
+
+            self._input_queue.put(input_str)
 
     def listen_for_updates(self):
         # Receive player id
@@ -32,6 +68,7 @@ class CheckersClient:
                     # Close client connection and exit
                     print(data["message"])
                     self.server.close()
+                    self._input_interrupt = True
                     exit()
 
                 elif data["status"] == "Invalid move":
@@ -116,12 +153,22 @@ class CheckersClient:
     def get_user_input(self):
         # Get user input for move
         try:
-            print(f"Player{self.player_id}'s turn")
+            print(f"Player{self.player_id}'s turn\n")
 
-            # CHANGE HERE START
-            start = input("Enter start position (row,col): ").split(',')
-            end = input("Enter end position (row,col): ").split(',')
-            # CHANGE HERE END
+            print("Enter start position (row,col) or 'quit' to exit:")
+            start = self._input_queue.get(block=True)
+            # if start == "quit":
+            #     self.shutdown(None, None)
+
+            print("Enter end position (row,col):")
+            end = self._input_queue.get(block=True)
+            # if end == "quit":
+            #     self.shutdown(None, None)
+
+            # # CHANGE HERE START
+            # start = input("Enter start position (row,col): ").split(',')
+            # end = input("Enter end position (row,col): ").split(',')
+            # # CHANGE HERE END
         except:
             self.shutdown(None, None)
 
@@ -138,7 +185,8 @@ class CheckersClient:
         # Shutdown client
         print("\nShutting down client...")
         self.server.close()
-        exit()
+        self._input_interrupt = True
+        raise SystemExit
 
 
 if __name__ == "__main__":
